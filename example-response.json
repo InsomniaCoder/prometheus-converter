@@ -1,0 +1,84 @@
+{
+    "face-comparison": {
+        "queryCount": 30886,
+        "qps": 0,
+        "instances": [
+            {
+                "svcType": "face-comparison",
+                "instanceId": "face-comparison:fce964ea-e475-11eb-9778-fa9e3e7886c6@ekyc-facecomparison-779df786d7-g65pc",
+                "status": "",
+                "upTime": 9384958,
+                "lastRequestStatus": "",
+                "lastRequestTime": 1626257504938
+            },
+            {
+                "svcType": "face-comparison",
+                "instanceId": "face-comparison:66a34b2e-e48c-11eb-98cc-e62bbe884465@ekyc-facecomparison-cfd7fb46-bjt5p",
+                "status": "ok",
+                "upTime": 1892812918,
+                "lastRequestStatus": "ok",
+                "lastRequestTime": 1628150560145
+            },
+            {
+                "svcType": "face-comparison",
+                "instanceId": "face-comparison:f6e06de4-e48b-11eb-8118-c22751794804@ekyc-facecomparison-cfd7fb46-thnqh",
+                "status": "",
+                "upTime": 56617,
+                "lastRequestStatus": "",
+                "lastRequestTime": 1626257617120
+            }
+        ]
+    },
+    "thai_id": {
+        "queryCount": 74739,
+        "qps": 0,
+        "instances": [
+            {
+                "svcType": "thai_id",
+                "instanceId": "thai_id@239211b2-e48c-11eb-a436-9293535b499b",
+                "status": "ok",
+                "upTime": 1892934018,
+                "lastRequestStatus": "ok",
+                "lastRequestTime": 1628150560604
+            },
+            {
+                "svcType": "thai_id",
+                "instanceId": "thai_id@fa37a9be-e475-11eb-a05d-3e868cc132af",
+                "status": "",
+                "upTime": 9405286,
+                "lastRequestStatus": "",
+                "lastRequestTime": 1626257513546
+            }
+        ]
+    },
+    "antispoofing": {
+        "queryCount": 31240,
+        "qps": 2,
+        "instances": [
+            {
+                "svcType": "antispoofing",
+                "instanceId": "antispoofing:1348f078-e48c-11eb-b50e-9a4ade48beaa@ekyc-antispoofing-b7dc9c99c-qdlqs",
+                "status": "",
+                "upTime": 35980,
+                "lastRequestStatus": "",
+                "lastRequestTime": 1626257624729
+            },
+            {
+                "svcType": "antispoofing",
+                "instanceId": "antispoofing:395d84fe-e48c-11eb-8e9a-6237745598d4@ekyc-antispoofing-b7dc9c99c-5r2lc",
+                "status": "ok",
+                "upTime": 1892913069,
+                "lastRequestStatus": "ok",
+                "lastRequestTime": 1628150565877
+            },
+            {
+                "svcType": "antispoofing",
+                "instanceId": "antispoofing:1e4f5b6c-e476-11eb-b077-028b7e872da4@ekyc-antispoofing-7d79cb9dcd-d8tqn",
+                "status": "",
+                "upTime": 9345364,
+                "lastRequestStatus": "",
+                "lastRequestTime": 1626257503734
+            }
+        ]
+    }
+}
