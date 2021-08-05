@@ -16,13 +16,13 @@ import (
 func init() {
 
 	log.Println("Initializting API package")
-
+	log.Println("Loaded configuration: %v", config.Config)
 	//set up router
 	r := gin.Default()
 	r.Use(Cors())
 
 	//set up health dependency
-	healthRepo := _healthRepository.NewHealthRepository()
+	healthRepo := _healthRepository.NewHealthRepository(config.Config.Target.URL)
 	healthUsecase := _healthUsecase.NewHealthUsecase(healthRepo)
 	_healthHandler.NewHealthHandler(r, healthUsecase)
 

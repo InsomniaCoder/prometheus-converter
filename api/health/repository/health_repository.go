@@ -9,10 +9,11 @@ import (
 )
 
 type healthRepository struct {
+	targetAPI string
 }
 
-func NewHealthRepository() domain.HealthRepository {
-	return &healthRepository{}
+func NewHealthRepository(target string) domain.HealthRepository {
+	return &healthRepository{targetAPI: target}
 }
 
 func (s *healthRepository) GetHealthInfo(ctx context.Context) (info *domain.HealthInfo, err error) {

@@ -8,10 +8,15 @@ import (
 type AppConfig struct {
 	Server ServerConfig
 	Debug  bool
+	Target TargetConfig
 }
 
 type ServerConfig struct {
 	Port int
+}
+
+type TargetConfig struct {
+	URL string
 }
 
 var Config AppConfig
