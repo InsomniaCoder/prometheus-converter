@@ -2,4 +2,4 @@ DEBUG: true
 server:
   port: 8080
 target:
-  url: "localhost:8127/admin/service-status"
+  url: "localhost:8080/static/example-response.json"

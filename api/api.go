@@ -20,7 +20,7 @@ func init() {
 	//set up router
 	r := gin.Default()
 	r.Use(Cors())
-
+	r.Static("/static", "./static")
 	//set up health dependency
 	healthRepo := _healthRepository.NewHealthRepository(config.Config.Target.URL)
 	healthUsecase := _healthUsecase.NewHealthUsecase(healthRepo)
