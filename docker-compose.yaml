@@ -1,0 +1,10 @@
+version: "3"
+services:
+  api:
+    build: .
+    container_name: prometheus-converter
+    image: prometheus-converter:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./config.yaml:/app/config.yaml
