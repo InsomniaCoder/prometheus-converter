@@ -2,4 +2,4 @@ DEBUG: true
 server:
   port: 8080
 target:
-  url: "localhost:8080/static/example-response.json"
+  url: "http://localhost:8080/static/example-response.json"

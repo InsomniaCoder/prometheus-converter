@@ -2,6 +2,8 @@ package repository
 
 import (
 	"context"
+	"encoding/json"
+	"net/http"
 
 	log "github.com/sirupsen/logrus"
 
@@ -16,7 +18,23 @@ func NewHealthRepository(target string) domain.HealthRepository {
 	return &healthRepository{targetAPI: target}
 }
 
-func (s *healthRepository) GetHealthInfo(ctx context.Context) (info *domain.HealthInfo, err error) {
+func (s *healthRepository) GetHealthInfo(c context.Context) (info *domain.HealthInfo, err error) {
 	log.Println("healthRepository GetHealthInfo...")
-	return nil, nil
+
+	response, err := http.Get(s.targetAPI)
+
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	defer response.Body.Close()
+
+	var healthInfo domain.HealthInfo
+
+	json.NewDecoder(response.Body).Decode(&healthInfo)
+
+	log.Println("health body: %v", healthInfo)
+
+	return &healthInfo, err
 }

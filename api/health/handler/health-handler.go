@@ -26,6 +26,8 @@ func (s *HealthHandler) GetPrometheusHealth(c *gin.Context) {
 
 	log.Printf("HealthHandler GetPrometheusHealth...")
 
+	s.HealthUsecase.GetPrometheusHealthInfo(c)
+
 	// if err != nil {
 	// 	log.Panicf("store sensor data fail: %+v\n", err)
 	// } else {

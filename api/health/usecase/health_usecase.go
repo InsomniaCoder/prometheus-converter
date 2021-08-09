@@ -17,8 +17,8 @@ func NewHealthUsecase(healthRepo domain.HealthRepository) domain.HealthUsecase {
 	}
 }
 
-func (s *healthUsecase) GetPrometheusHealthInfo(ctx context.Context) (string, error) {
+func (s *healthUsecase) GetPrometheusHealthInfo(c context.Context) (string, error) {
 	log.Println("healthUsecase GetPrometheusHealthInfo...")
-
+	s.healthRepository.GetHealthInfo(c)
 	return "", nil
 }
