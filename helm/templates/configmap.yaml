@@ -6,8 +6,8 @@ metadata:
     {{- include "helm.labels" . | nindent 4 }}
 data:
   config.yaml: |
-  DEBUG: true
-  server:
-    port: {{ .Values.service.port }}
-  target:
-    url: {{ .Values.target.url }}
+    DEBUG: true
+    server:
+      port: {{ .Values.service.port }}
+    target:
+      url: {{ .Values.target.url }}
