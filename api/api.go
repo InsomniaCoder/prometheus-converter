@@ -16,7 +16,7 @@ import (
 func init() {
 
 	log.Println("Initializting API package")
-	log.Println("Loaded configuration: %v", config.Config)
+	log.Printf("Loaded configuration: %v", config.Config)
 	//set up router
 	r := gin.Default()
 	r.Use(Cors())
