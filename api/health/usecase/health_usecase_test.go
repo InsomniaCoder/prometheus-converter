@@ -17,8 +17,7 @@ import (
 )
 
 var (
-	mockHealthInfo    *domain.HealthInfo
-	mockPromethesText string
+	mockHealthInfo *domain.HealthInfo
 )
 
 type MockHealthRepository struct {
@@ -45,8 +44,6 @@ func TestMain(m *testing.M) {
 
 	json.Unmarshal([]byte(byteValue), &mockHealthInfo)
 
-	mockPromethesText = "gateway_up 1\nface_comparison_up 1\nthai_id_up 1\nantispoofing_up 1\n"
-
 	code := m.Run()
 	os.Exit(code)
 }
@@ -55,8 +52,10 @@ func TestGetPrometheusHealthInfoAllUpShouldProduceAllUp(t *testing.T) {
 
 	mr := new(MockHealthRepository)
 	mr.On("GetHealthInfo", mock.Anything).Return(mockHealthInfo, nil).Once()
-	uc := usecase.NewHealthUsecase(mr)
 
+	mockPromethesText := "gateway_up 1\nface_comparison_up 1\nthai_id_up 1\nantispoofing_up 1\n"
+
+	uc := usecase.NewHealthUsecase(mr)
 	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
 
 	assert.Nil(t, err)
