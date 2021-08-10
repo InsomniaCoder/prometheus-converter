@@ -34,7 +34,7 @@ func (s *healthRepository) GetHealthInfo(c context.Context) (info *domain.Health
 
 	json.NewDecoder(response.Body).Decode(&healthInfo)
 
-	log.Println("health body: %v", healthInfo)
+	log.Printf("health body: %v\n", healthInfo)
 
 	return &healthInfo, err
 }

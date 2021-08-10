@@ -3,6 +3,7 @@ package usecase_test
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -25,8 +26,8 @@ type MockHealthRepository struct {
 }
 
 func (m *MockHealthRepository) GetHealthInfo(c context.Context) (info *domain.HealthInfo, err error) {
-	ret := m.Called()
-	return ret.Get(0).(*domain.HealthInfo), nil
+	ret := m.Called(c)
+	return ret.Get(0).(*domain.HealthInfo), ret.Error(1)
 }
 
 func TestMain(m *testing.M) {
@@ -54,6 +55,20 @@ func TestGetPrometheusHealthInfoAllUpShouldProduceAllUp(t *testing.T) {
 	mr.On("GetHealthInfo", mock.Anything).Return(mockHealthInfo, nil).Once()
 
 	mockPromethesText := "gateway_up 1\nface_comparison_up 1\nthai_id_up 1\nantispoofing_up 1\n"
+
+	uc := usecase.NewHealthUsecase(mr)
+	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, mockPromethesText, returnPrometheusText)
+}
+
+func TestGetPrometheusHealthInfoDownShouldProduceDown(t *testing.T) {
+
+	mr := new(MockHealthRepository)
+	mr.On("GetHealthInfo", mock.Anything).Return(&domain.HealthInfo{}, errors.New("some API error occured")).Once()
+
+	mockPromethesText := "gateway_up 0\nface_comparison_up 0\nthai_id_up 0\nantispoofing_up 0\n"
 
 	uc := usecase.NewHealthUsecase(mr)
 	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())

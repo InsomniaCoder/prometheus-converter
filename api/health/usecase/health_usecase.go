@@ -26,7 +26,7 @@ func (s *healthUsecase) GetPrometheusHealthInfo(c context.Context) (string, erro
 
 	if err != nil {
 		log.Errorf("call API error %v\n", err)
-		prometheus_stat_text += "gateway_up 0"
+		prometheus_stat_text += "gateway_up 0\nface_comparison_up 0\nthai_id_up 0\nantispoofing_up 0\n"
 		return prometheus_stat_text, nil
 	}
 
