@@ -93,3 +93,37 @@ func TestGetPrometheusHealthInfoFaceCompareDownShouldProduceOnlyFaceCompareDown(
 	assert.Nil(t, err)
 	assert.Equal(t, mockPromethesText, returnPrometheusText)
 }
+
+func TestGetPrometheusHealthInfoThaiIDDownShouldProduceOnlyThaiIDDown(t *testing.T) {
+
+	mockThaiIDDown := mockHealthInfo
+	mockThaiIDDown.ThaiID.Instances[0].Status = ""
+
+	mr := new(MockHealthRepository)
+	mr.On("GetHealthInfo", mock.Anything).Return(mockThaiIDDown, nil).Once()
+
+	mockPromethesText := "gateway_up 1\nface_comparison_up 1\nthai_id_up 0\nantispoofing_up 1\n"
+
+	uc := usecase.NewHealthUsecase(mr)
+	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, mockPromethesText, returnPrometheusText)
+}
+
+func TestGetPrometheusHealthInfoSpoofDownShouldProduceOnlySpoofDown(t *testing.T) {
+
+	mockSpoofDown := mockHealthInfo
+	mockSpoofDown.Antispoofing.Instances[1].Status = ""
+
+	mr := new(MockHealthRepository)
+	mr.On("GetHealthInfo", mock.Anything).Return(mockSpoofDown, nil).Once()
+
+	mockPromethesText := "gateway_up 1\nface_comparison_up 1\nthai_id_up 1\nantispoofing_up 0\n"
+
+	uc := usecase.NewHealthUsecase(mr)
+	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, mockPromethesText, returnPrometheusText)
+}
