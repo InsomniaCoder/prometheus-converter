@@ -6,9 +6,9 @@ replicaCount: 1
 
 image:
   repository: insomniacoder/prometheus-converter
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "test"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""

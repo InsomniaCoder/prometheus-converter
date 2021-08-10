@@ -6,6 +6,7 @@ metadata:
     {{- include "helm.labels" . | nindent 4 }}
   annotations:
     prometheus.io/scrape: "true"
+    prometheus.io/path: "/api/v1/prometheus"
 spec:
   type: {{ .Values.service.type }}
   ports:
