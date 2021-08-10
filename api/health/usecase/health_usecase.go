@@ -2,10 +2,18 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/insomniacoder/prometheus-converter/api/domain"
 	log "github.com/sirupsen/logrus"
 )
+
+type prometheusHealthMetric struct {
+	gatewayUp      int
+	facecompareUp  int
+	thiaIdUp       int
+	antiSpoofingUp int
+}
 
 type healthUsecase struct {
 	healthRepository domain.HealthRepository
@@ -18,49 +26,56 @@ func NewHealthUsecase(healthRepo domain.HealthRepository) domain.HealthUsecase {
 }
 
 func (s *healthUsecase) GetPrometheusHealthInfo(c context.Context) (string, error) {
-	log.Println("healthUsecase GetPrometheusHealthInfo...")
+	log.Println(`healthUsecase GetPrometheusHealthInfo...`)
 
 	res, err := s.healthRepository.GetHealthInfo(c)
 
-	var prometheus_stat_text string
+	var metric = &prometheusHealthMetric{}
 
 	if err != nil {
-		log.Errorf("call API error %v\n", err)
-		prometheus_stat_text += "gateway_up 0\nface_comparison_up 0\nthai_id_up 0\nantispoofing_up 0\n"
-		return prometheus_stat_text, nil
+
+		log.Errorf(`call API error %v\n`, err)
+		return formatPrometheusText(&prometheusHealthMetric{
+			gatewayUp:      1,
+			facecompareUp:  0,
+			thiaIdUp:       0,
+			antiSpoofingUp: 0,
+		}), nil
 	}
 
-	prometheus_stat_text += "gateway_up 1\n"
+	metric.gatewayUp = 1
 
-	var face_comparison_stat string
 	for _, instance := range res.FaceComparison.Instances {
-		face_comparison_stat = "face_comparison_up 0\n"
-		if instance.Status == "ok" {
-			face_comparison_stat = "face_comparison_up 1\n"
+		metric.facecompareUp = 0
+		if instance.Status == `ok` {
+			metric.facecompareUp = 1
 			break
 		}
 	}
-	prometheus_stat_text += face_comparison_stat
 
-	var thai_id_stat string
 	for _, instance := range res.ThaiID.Instances {
-		thai_id_stat = "thai_id_up 0\n"
-		if instance.Status == "ok" {
-			thai_id_stat = "thai_id_up 1\n"
+		metric.thiaIdUp = 0
+		if instance.Status == `ok` {
+			metric.thiaIdUp = 1
 			break
 		}
 	}
-	prometheus_stat_text += thai_id_stat
 
-	var antispoofing_stat string
 	for _, instance := range res.Antispoofing.Instances {
-		antispoofing_stat = "antispoofing_up 0\n"
-		if instance.Status == "ok" {
-			antispoofing_stat = "antispoofing_up 1\n"
+		metric.antiSpoofingUp = 0
+		if instance.Status == `ok` {
+			metric.antiSpoofingUp = 1
 			break
 		}
 	}
-	prometheus_stat_text += antispoofing_stat
+	return formatPrometheusText(metric), nil
+}
 
-	return prometheus_stat_text, nil
+func formatPrometheusText(m *prometheusHealthMetric) string {
+	var promText = `gateway_up %d
+face_comparison_up %d
+thai_id_up %d
+antispoofing_up %d
+`
+	return fmt.Sprintf(promText, m.gatewayUp, m.facecompareUp, m.thiaIdUp, m.antiSpoofingUp)
 }

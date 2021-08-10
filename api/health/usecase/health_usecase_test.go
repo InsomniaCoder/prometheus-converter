@@ -69,7 +69,7 @@ func TestGetPrometheusHealthInfoDownShouldProduceDown(t *testing.T) {
 	mr := new(MockHealthRepository)
 	mr.On("GetHealthInfo", mock.Anything).Return(&domain.HealthInfo{}, errors.New("some API error occured")).Once()
 
-	mockPromethesText := "gateway_up 0\nface_comparison_up 0\nthai_id_up 0\nantispoofing_up 0\n"
+	mockPromethesText := "gateway_up 1\nface_comparison_up 0\nthai_id_up 0\nantispoofing_up 0\n"
 
 	uc := usecase.NewHealthUsecase(mr)
 	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
