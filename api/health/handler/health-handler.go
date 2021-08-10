@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/insomniacoder/prometheus-converter/api/domain"
 
@@ -29,5 +31,5 @@ func (s *HealthHandler) GetPrometheusHealth(c *gin.Context) {
 	metrics, _ := s.HealthUsecase.GetPrometheusHealthInfo(c)
 	c.Header("Content-Type", "text/plain; version=0.0.4; charset=utf-8")
 
-	c.JSON(200, metrics)
+	c.Data(http.StatusOK, "text/plain; version=0.0.4; charset=utf-8", []byte(metrics))
 }
