@@ -21,6 +21,7 @@ WORKDIR /app
 EXPOSE 8080
 
 COPY --from=builder /app/prometheus-converter /app
+COPY --from=builder /app/config.yaml /app
 
 USER 65532:65532
 
