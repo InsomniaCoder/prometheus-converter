@@ -76,3 +76,20 @@ func TestGetPrometheusHealthInfoDownShouldProduceDown(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, mockPromethesText, returnPrometheusText)
 }
+
+func TestGetPrometheusHealthInfoFaceCompareDownShouldProduceOnlyFaceCompareDown(t *testing.T) {
+
+	mockFaceCompareDown := mockHealthInfo
+	mockFaceCompareDown.FaceComparison.Instances[1].Status = ""
+
+	mr := new(MockHealthRepository)
+	mr.On("GetHealthInfo", mock.Anything).Return(mockFaceCompareDown, nil).Once()
+
+	mockPromethesText := "gateway_up 1\nface_comparison_up 0\nthai_id_up 1\nantispoofing_up 1\n"
+
+	uc := usecase.NewHealthUsecase(mr)
+	returnPrometheusText, err := uc.GetPrometheusHealthInfo(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, mockPromethesText, returnPrometheusText)
+}
