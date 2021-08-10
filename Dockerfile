@@ -22,7 +22,7 @@ EXPOSE 8080
 
 COPY --from=builder /app/prometheus-converter /app
 COPY --from=builder /app/config.yaml /app
-COPY --from=builder /app/static/ /app
+COPY --from=builder /app/static/ /app/static
 
 USER 65532:65532
 
