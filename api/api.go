@@ -21,6 +21,9 @@ func init() {
 	r := gin.Default()
 	r.Use(Cors())
 	r.Static("/static", "./static")
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, "ok")
+	})
 	//set up health dependency
 	healthRepo := _healthRepository.NewHealthRepository(config.Config.Target.URL)
 	healthUsecase := _healthUsecase.NewHealthUsecase(healthRepo)
