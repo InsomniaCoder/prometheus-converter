@@ -10,9 +10,12 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+target:
+  url: "http://localhost:8080/static/example-response.json"
+
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "pc"
+fullnameOverride: "prom-convert"
 
 serviceAccount:
   # Specifies whether a service account should be created
